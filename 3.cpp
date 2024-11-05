@@ -1,9 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// stactic
+// friend function, friend class
+// forward declaration
+
 
 class Sinhvien{
+	friend class Giaovien;
 	private:
 		string id,ten,ns;
 		double gpa;
@@ -14,7 +17,36 @@ class Sinhvien{
 		void in();
 		void tangDem();
 		int getDem();
+		friend void chuanhoa(Sinhvien&);
 };
+
+
+void chuanhoa(Sinhvien &a){
+	string res ="";
+	stringstream ss(a.ten);
+	string token;
+	while(ss >> token){
+		res += toupper(token[0]);
+		for(int i=1;i<token.length();i++){
+			res += tolower(token[i]);
+		}
+		res += " ";
+	}
+	res.erase(res.length()-1);
+	a.ten = res;
+}
+
+
+class Giaovien{
+	private:
+		string khoa;
+	public:
+		void update(Sinhvien&);
+};
+
+void Giaovien::update(Sinhvien& x){
+	x.gpa = 3.20;
+}
 
 int Sinhvien::dem =0;
 
@@ -49,10 +81,9 @@ void Sinhvien::in(){
 int main(){
 	Sinhvien x;
 	x.nhap();
+	Giaovien y;
+	y.update(x);
 	x.in();
-	Sinhvien y;
-	y.nhap();
-	y.in();
 	return 0;
 }
 
